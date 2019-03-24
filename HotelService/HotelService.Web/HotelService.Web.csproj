@@ -10,6 +10,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="8.0.0" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="6.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="MongoDB.Driver" Version="2.7.3" />
@@ -17,8 +19,8 @@
 
   </ItemGroup>
 
- <Target Name = "CopyFiles" AfterTargets="build">
-    <Copy DestinationFolder="$(OutputPath)" SourceFiles="appsettings.json" SkipUnchangedFiles = "false" />
+ <Target Name="CopyFiles" AfterTargets="build">
+    <Copy DestinationFolder="$(OutputPath)" SourceFiles="appsettings.json" SkipUnchangedFiles="false" />
   </Target>
 
 </Project>

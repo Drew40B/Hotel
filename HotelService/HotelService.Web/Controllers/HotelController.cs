@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using AutoMapper;
 using HotelService.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,11 +12,14 @@ namespace HotelService.Web.Controllers
     [Route("api/[controller]")]
     public class HotelController : ControllerBase
     {
+
+        private IMapper _mapper;
         /// <summary>
         /// ctor
         /// </summary>
-        public HotelController()
+        public HotelController(IMapper mapper)
         {
+            _mapper = mapper;
         }
 
         /// <summary>

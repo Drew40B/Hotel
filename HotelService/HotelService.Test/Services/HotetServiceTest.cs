@@ -5,7 +5,8 @@ using HotelService.Web.Models;
 using System;
 using MongoDB.Driver;
 using Microsoft.Extensions.Configuration;
-using HotelService.Web.Dto;
+using HotelService.Web.Database;
+using AutoMapper;
 
 namespace HotelService.Test.Services
 {
@@ -21,7 +22,7 @@ namespace HotelService.Test.Services
         public async void CreateHotel()
         {
             var config = TestHelper.GetIConfigurationRoot();
-            var service = new HotelService.Web.Services.HotelService(config);
+            var service = new HotelService.Web.Services.HotelService(config,null);
 
             var init = new HotelInitModel
             {
@@ -40,7 +41,7 @@ namespace HotelService.Test.Services
         public void CreateRandomRoom()
         {
             var config = TestHelper.GetIConfigurationRoot();
-            var service = new HotelService.Web.Services.HotelService(config);
+            var service = new HotelService.Web.Services.HotelService(config,null);
               var init = new HotelInitModel
             {
                 Location = "Somewhere",
@@ -63,12 +64,12 @@ namespace HotelService.Test.Services
         public void Dispose()
         {
             var config = TestHelper.GetIConfigurationRoot();
-            var service = new HotelService.Web.Services.HotelService(config);
+            var service = new HotelService.Web.Services.HotelService(config,null);
 
              var client = new MongoClient(config.GetConnectionString("hotels_db"));
             var database = client.GetDatabase("hotels_db");
 
-            database.GetCollection<HotelDto>("hotels").DeleteMany(h => h.Name == _prefix);
+            database.GetCollection<HotelDbModel>("hotels").DeleteMany(h => h.Name == _prefix);
         }
     }
 }

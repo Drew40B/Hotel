@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using HotelService.Web.Database;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -29,7 +31,7 @@ namespace HotelService.Web
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-              // Register the Swagger services
+            // Register the Swagger services
             services.AddOpenApiDocument(config =>
             {
                 config.PostProcess = document =>
@@ -41,12 +43,16 @@ namespace HotelService.Web
 
                 };
             });
+
+            // Auto Mapper Configurations
+            services.AddAutoMapper(); 
         }
+        
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-           if (env.IsDevelopment())
+            if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }

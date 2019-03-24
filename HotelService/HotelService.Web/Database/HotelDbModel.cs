@@ -1,14 +1,15 @@
 using System.Collections.Generic;
+using HotelService.Web.Database;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace HotelService.Web.Dto
+namespace HotelService.Web.Database
 {
-    public class HotelDto
+    public class HotelDbModel
     {
-        public HotelDto()
+        public HotelDbModel()
         {
-            Rooms = new List<RoomDto>();
+            Rooms = new List<RoomDbModel>();
         }
 
         [BsonId]
@@ -21,6 +22,6 @@ namespace HotelService.Web.Dto
         public string Location { get; set; }
 
         [BsonElement("rooms")]
-        public List<RoomDto> Rooms { get; set; }
+        public List<RoomDbModel> Rooms { get; set; }
     }
 }

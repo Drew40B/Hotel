@@ -1,9 +1,9 @@
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace HotelService.Web.Dto
+namespace HotelService.Web.Database
 {
-    public class RoomDto
+    public class RoomDbModel
     {
 
         public int Number { get; set; }

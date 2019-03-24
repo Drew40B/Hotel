@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using HotelService.Web.Dto;
+using AutoMapper;
+using HotelService.Web.Database;
 using HotelService.Web.Models;
 using Microsoft.Extensions.Configuration;
 using MongoDB.Driver;
@@ -12,22 +13,22 @@ namespace HotelService.Web.Services
     {
         const int MAX_FLOORS = 100;
         const int MAX_ROOMS_PER_FLOOR = 50;
-        private readonly IMongoCollection<HotelDto> _hotels;
+        private readonly IMongoCollection<HotelDbModel> _hotels;
+private readonly IMapper _mapper;
 
-
-        public HotelService(IConfiguration config)
+        public HotelService(IConfiguration config,IMapper mapper)
         {
             var client = new MongoClient(config.GetConnectionString("hotels_db"));
             var database = client.GetDatabase("hotels_db");
-            _hotels = database.GetCollection<HotelDto>("hotels");
-
+            _hotels = database.GetCollection<HotelDbModel>("hotels");
+_mapper = mapper;
 
         }
 
 
         public async Task<HotelModel> Create(HotelInitModel hotel)
         {
-            var dto = new HotelDto();
+            var dto = new HotelDbModel();
 
             dto.Name = hotel.Name;
             dto.Location = hotel.Location;
@@ -65,12 +66,12 @@ namespace HotelService.Web.Services
             return result.ToArray();
         }
 
-        public RoomDto CreateRoom(int floor, int roomNumber, HotelInitModel model)
+        public RoomDbModel CreateRoom(int floor, int roomNumber, HotelInitModel model)
         {
 
             roomNumber = floor * 100 + roomNumber;
 
-            RoomDto room = null;
+            RoomDbModel room = null;
 
             switch (model.Mode)
             {
@@ -90,9 +91,9 @@ namespace HotelService.Web.Services
         }
 
 
-        private RoomDto CreateRandomRoom()
+        private RoomDbModel CreateRandomRoom()
         {
-            var result = new RoomDto();
+            var result = new RoomDbModel();
 
             var rand = new Random();
             int value = rand.Next(Enum.GetNames(typeof(Bedding)).Length);
@@ -103,7 +104,13 @@ namespace HotelService.Web.Services
         }
 
 
+        public async Task<HotelModel> FindHotel(string name)
+        {
+            var dto = (await _hotels.FindAsync(h => h.Name == name)).ToList();
 
+return null;
+
+        }
 
     }
 }

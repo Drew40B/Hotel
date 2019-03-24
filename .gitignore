@@ -65,3 +65,5 @@ typings/
 **/debug/
 **/obj/
 
+#Docker data
+docker_data/

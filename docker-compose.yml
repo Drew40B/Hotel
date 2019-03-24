@@ -6,4 +6,7 @@ services:
     image: hotels_db:latest
     ports:
       - "27017:27017"
-   
+    volumes:
+      - ./docker_data/volumes/mongo:/data/db
+
+

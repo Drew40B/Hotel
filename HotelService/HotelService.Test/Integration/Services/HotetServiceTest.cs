@@ -17,12 +17,34 @@ namespace HotelService.Test.Services
     {
 
         private string _prefix = "Test:" + Guid.NewGuid().ToString();
+        private IMapper _mapper;
+
+        public HotetServiceTest()
+        {
+            try{
+            // Initialize mapping
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile<HotelMapping>();
+
+            });
+
+            //TODO is there a beeter place to validate mapping config?
+         //   config.AssertConfigurationIsValid();
+
+            _mapper = config.CreateMapper();
+            } catch(Exception e){
+                Console.WriteLine(e.ToString());
+                throw;
+            }
+        }
+
 
         [Fact]
         public async void CreateHotel()
         {
             var config = TestHelper.GetIConfigurationRoot();
-            var service = new HotelService.Web.Services.HotelService(config,null);
+            var service = new HotelService.Web.Services.HotelService(config, null);
 
             var init = new HotelInitModel
             {
@@ -30,7 +52,7 @@ namespace HotelService.Test.Services
                 Name = _prefix,
                 FloorCount = 5,
                 RoomsPerFloor = 10,
-                Amenities = new string[] {"Coffee Maker","Fridge"},
+                Amenities = new string[] { "Coffee Maker", "Fridge" },
                 Mode = CreateMode.Random
             };
 
@@ -41,18 +63,18 @@ namespace HotelService.Test.Services
         public void CreateRandomRoom()
         {
             var config = TestHelper.GetIConfigurationRoot();
-            var service = new HotelService.Web.Services.HotelService(config,null);
-              var init = new HotelInitModel
+            var service = new HotelService.Web.Services.HotelService(config, null);
+            var init = new HotelInitModel
             {
                 Location = "Somewhere",
                 Name = _prefix,
                 FloorCount = 5,
                 RoomsPerFloor = 10,
-                Amenities = new string[] {"Coffee Maker","Fridge"},
+                Amenities = new string[] { "Coffee Maker", "Fridge" },
                 Mode = CreateMode.Random
             };
 
-            var room = service.CreateRoom(1, 3,init);
+            var room = service.CreateRoom(1, 3, init);
 
             Assert.Equal(room.Number, 103);
             Assert.True(room.MaxOccupants > 1);
@@ -64,9 +86,9 @@ namespace HotelService.Test.Services
         public void Dispose()
         {
             var config = TestHelper.GetIConfigurationRoot();
-            var service = new HotelService.Web.Services.HotelService(config,null);
+            var service = new HotelService.Web.Services.HotelService(config, null);
 
-             var client = new MongoClient(config.GetConnectionString("hotels_db"));
+            var client = new MongoClient(config.GetConnectionString("hotels_db"));
             var database = client.GetDatabase("hotels_db");
 
             database.GetCollection<HotelDbModel>("hotels").DeleteMany(h => h.Name == _prefix);

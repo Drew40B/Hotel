@@ -1,7 +1,10 @@
-public class HotelModel
+namespace HotelService.Web.Models
 {
-    public string Name { get; set; }
+    public class HotelModel
+    {
+        public string Name { get; set; }
 
-    public string Location { get; set; }
-    
+        public string Location { get; set; }
+
+    }
 }

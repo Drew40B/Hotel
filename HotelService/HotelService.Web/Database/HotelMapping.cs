@@ -1,4 +1,5 @@
 using AutoMapper.Configuration;
+using HotelService.Web.Models;
 
 namespace HotelService.Web.Database
 {
@@ -7,6 +8,7 @@ namespace HotelService.Web.Database
         public HotelMapping()
         {
             CreateMap<HotelModel,HotelDbModel>().ReverseMap();
+            CreateMap<RoomModel,RoomDbModel>().ReverseMap();
         }
     }
 }

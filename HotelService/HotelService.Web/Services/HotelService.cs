@@ -14,14 +14,14 @@ namespace HotelService.Web.Services
         const int MAX_FLOORS = 100;
         const int MAX_ROOMS_PER_FLOOR = 50;
         private readonly IMongoCollection<HotelDbModel> _hotels;
-private readonly IMapper _mapper;
+        private readonly IMapper _mapper;
 
-        public HotelService(IConfiguration config,IMapper mapper)
+        public HotelService(IConfiguration config, IMapper mapper)
         {
             var client = new MongoClient(config.GetConnectionString("hotels_db"));
             var database = client.GetDatabase("hotels_db");
             _hotels = database.GetCollection<HotelDbModel>("hotels");
-_mapper = mapper;
+            _mapper = mapper;
 
         }
 
@@ -44,7 +44,7 @@ _mapper = mapper;
             }
 
             await _hotels.InsertOneAsync(dto);
-            return null;
+            return _mapper.Map<HotelModel>(dto);
 
         }
 
@@ -108,7 +108,7 @@ _mapper = mapper;
         {
             var dto = (await _hotels.FindAsync(h => h.Name == name)).ToList();
 
-return null;
+            return _mapper.Map<HotelModel>(dto);
 
         }
 

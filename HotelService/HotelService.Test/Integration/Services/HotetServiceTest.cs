@@ -30,7 +30,7 @@ namespace HotelService.Test.Services
             });
 
             //TODO is there a beeter place to validate mapping config?
-         //   config.AssertConfigurationIsValid();
+            config.AssertConfigurationIsValid();
 
             _mapper = config.CreateMapper();
             } catch(Exception e){
@@ -44,7 +44,7 @@ namespace HotelService.Test.Services
         public async void CreateHotel()
         {
             var config = TestHelper.GetIConfigurationRoot();
-            var service = new HotelService.Web.Services.HotelService(config, null);
+            var service = new HotelService.Web.Services.HotelService(config, _mapper);
 
             var init = new HotelInitModel
             {

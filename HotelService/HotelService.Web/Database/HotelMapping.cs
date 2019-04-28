@@ -7,8 +7,12 @@ namespace HotelService.Web.Database
     {
         public HotelMapping()
         {
-            CreateMap<HotelModel,HotelDbModel>().ReverseMap();
+            CreateMap<HotelModel,HotelDbModel>()
+                .ForMember(x => x.Id,opt => opt.Ignore())
+                .ForMember(x => x.Rooms, opt => opt.Ignore());
+                
             CreateMap<RoomModel,RoomDbModel>().ReverseMap();
+                
         }
     }
 }

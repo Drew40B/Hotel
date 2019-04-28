@@ -9,6 +9,12 @@
   <ItemGroup>
      
 
+    <PackageReference Include="coverlet.msbuild" Version="2.6.0">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+     
+
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
     <PackageReference Include="MongoDB.Driver" Version="2.7.3" />
@@ -20,7 +26,7 @@
     <ProjectReference Include="..\HotelService.Web\HotelService.Web.csproj" />
   </ItemGroup>
 
- <Target Name = "CopyFiles" AfterTargets="build">
-    <Copy DestinationFolder="$(OutputPath)" SourceFiles="appsettings.json" SkipUnchangedFiles = "false" />
+ <Target Name="CopyFiles" AfterTargets="build">
+    <Copy DestinationFolder="$(OutputPath)" SourceFiles="appsettings.json" SkipUnchangedFiles="false" />
   </Target>
 </Project>

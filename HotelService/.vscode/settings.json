@@ -1,3 +1,4 @@
 {
     "window.title": "Hotel->  ${dirty}${activeEditorShort}${separator}${rootName}${separator}${appName}"
+    
 }

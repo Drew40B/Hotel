@@ -67,3 +67,8 @@ typings/
 
 #Docker data
 docker_data/
+
+
+# Code coverage
+lcov.info
+lcov.opencover.xml

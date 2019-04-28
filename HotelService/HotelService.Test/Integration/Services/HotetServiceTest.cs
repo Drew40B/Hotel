@@ -21,19 +21,22 @@ namespace HotelService.Test.Services
 
         public HotetServiceTest()
         {
-            try{
-            // Initialize mapping
-            var config = new MapperConfiguration(cfg =>
+            try
             {
-                cfg.AddProfile<HotelMapping>();
+                // Initialize mapping
+                var config = new MapperConfiguration(cfg =>
+                {
+                    cfg.AddProfile<HotelMapping>();
 
-            });
+                });
 
-            //TODO is there a beeter place to validate mapping config?
-            config.AssertConfigurationIsValid();
+                //TODO is there a beeter place to validate mapping config?
+                config.AssertConfigurationIsValid();
 
-            _mapper = config.CreateMapper();
-            } catch(Exception e){
+                _mapper = config.CreateMapper();
+            }
+            catch (Exception e)
+            {
                 Console.WriteLine(e.ToString());
                 throw;
             }
@@ -79,6 +82,28 @@ namespace HotelService.Test.Services
             Assert.Equal(room.Number, 103);
             Assert.True(room.MaxOccupants > 1);
             Assert.True(room.Description.Length > 1);
+
+        }
+
+        [Fact]
+        public async void FindHotel()
+        {
+
+
+            var config = TestHelper.GetIConfigurationRoot();
+            var client = new MongoClient(config.GetConnectionString("hotels_db"));
+            var database = client.GetDatabase("hotels_db");
+            var collection = database.GetCollection<HotelDbModel>("hotels");
+
+            var dbModel = new HotelDbModel();
+            dbModel.Name = _prefix;
+
+            await collection.InsertOneAsync(dbModel);
+
+            var service = new HotelService.Web.Services.HotelService(config, _mapper);
+            var found = service.FindHotel(dbModel.Name);
+
+            Assert.NotNull(found);
 
         }
 
